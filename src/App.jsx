@@ -11,14 +11,23 @@ function App() {
 
   function handleAddActivity(newActivity) {
     // Rename & Destructure
-    const { activityInput: name, isGoodWeatherCheck: isChecked } = newActivity;
-    setActivities([{ id: uid(), name, isChecked }, ...activities]);
+    const { activityInput: name, checkbox } = newActivity;
+    setActivities([{ id: uid(), name, checkbox }, ...activities]);
   }
-  /* console.log(activities); */
+
+  //Filter function:
+
+  const isGoodWeather = true;
+  //Filter with implicit return "()" istead of "{return}"
+  const filteredActivities = activities.filter(
+    (activity) => activity.checkbox === isGoodWeather
+  );
+
+  console.log(filteredActivities);
 
   return (
     <>
-      <List activities={activities} />
+      <List activities={filteredActivities} isGoodWeather={isGoodWeather} />
       <Form onAddActivity={handleAddActivity} />
     </>
   );

@@ -1,9 +1,11 @@
 import "./List.css";
 
-function List({ activities }) {
-  console.log("test: ", activities);
+function List({ activities, isGoodWeather }) {
+  const goodWeather = "The weather is awesome! Go outside and: ";
+  const badWeather = "Bad weather outside! Here is what you can do now: ";
   return (
     <ul className="activityList">
+      <h2>{isGoodWeather ? goodWeather : badWeather}</h2>
       {activities.map((activity) => (
         <li key={activity.id}>{activity.name}</li>
       ))}

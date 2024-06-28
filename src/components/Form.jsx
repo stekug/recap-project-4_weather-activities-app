@@ -1,14 +1,14 @@
-import './Form.css';
+import "./Form.css";
 
 function Form({ onAddActivity }) {
   function handleSubmit(event) {
     event.preventDefault();
     // Get the boolean from checkbox
-    const isGoodWeatherCheck = event.target.isGoodWeatherCheck.checked;
+    const checkbox = event.target.checkbox.checked;
     const formElements = new FormData(event.target);
     const data = Object.fromEntries(formElements);
     // Save the boolean into the data object
-    data.isGoodWeatherCheck = isGoodWeatherCheck;
+    data.checkbox = checkbox;
     // console.log(data);
     onAddActivity(data);
     event.target.reset();
@@ -23,8 +23,8 @@ function Form({ onAddActivity }) {
         <input type="text" name="activityInput" id="activityInput"></input>
       </div>
       <div>
-        <label htmlFor="isGoodWeatherCheck">Good-weather Activity:</label>
-        <input type="checkbox" name="isGoodWeatherCheck" id="isGoodWeatherCheck"></input>
+        <label htmlFor="checkbox">Good-weather Activity:</label>
+        <input type="checkbox" name="checkbox" id="checkbox"></input>
       </div>
       <button type="submit">Submit Activity</button>
     </form>
