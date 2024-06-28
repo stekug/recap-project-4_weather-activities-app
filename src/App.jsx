@@ -8,22 +8,26 @@ function App() {
   const [activities, setActivities] = useLocalStorageState("activities", {
     defaultValue: [],
   });
-  /* const isGoodWeather = true; */
-
-  /*   {activities.filter((activity)=>{
-    if (activity.checkbox === isGoodWeather) 
-  })} */
 
   function handleAddActivity(newActivity) {
     // Rename & Destructure
     const { activityInput: name, checkbox } = newActivity;
     setActivities([{ id: uid(), name, checkbox }, ...activities]);
   }
-  /* console.log(activities); */
+
+  //Filter function:
+
+  const isGoodWeather = true;
+  //Filter with implicit return "()" istead of "{return}"
+  const filteredActivities = activities.filter(
+    (activity) => activity.checkbox === isGoodWeather
+  );
+
+  console.log(filteredActivities);
 
   return (
     <>
-      <List activities={activities} />
+      <List activities={filteredActivities} isGoodWeather={isGoodWeather} />
       <Form onAddActivity={handleAddActivity} />
     </>
   );
