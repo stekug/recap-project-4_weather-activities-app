@@ -8,11 +8,16 @@ function App() {
   const [activities, setActivities] = useLocalStorageState("activities", {
     defaultValue: [],
   });
+  /* const isGoodWeather = true; */
+
+  /*   {activities.filter((activity)=>{
+    if (activity.checkbox === isGoodWeather) 
+  })} */
 
   function handleAddActivity(newActivity) {
     // Rename & Destructure
-    const { activityInput: name, isGoodWeatherCheck: isChecked } = newActivity;
-    setActivities([{ id: uid(), name, isChecked }, ...activities]);
+    const { activityInput: name, checkbox } = newActivity;
+    setActivities([{ id: uid(), name, checkbox }, ...activities]);
   }
   /* console.log(activities); */
 
