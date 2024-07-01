@@ -1,15 +1,15 @@
-import { uid } from "uid";
-import "./App.css";
-import Form from "./components/Form";
-import List from "./components/List";
-import useLocalStorageState from "use-local-storage-state";
-import { useEffect, useState } from "react";
+import { uid } from 'uid';
+import './App.css';
+import Form from './components/Form';
+import List from './components/List';
+import useLocalStorageState from 'use-local-storage-state';
+import { useEffect, useState } from 'react';
+import ErrorComp from './components/ErrorComp';
 
-function App() {
-  const [activities, setActivities] = useLocalStorageState("activities", {
-    defaultValue: [],
-  });
+const apiURL = 'https://example-apis.vercel.app/api/weather/rainforest';
 
+export default function App() {
+  const [activities, setActivities] = useLocalStorageState('activities', { defaultValue: [] });
   const [weather, setWeather] = useState();
 
   function handleAddActivity(newActivity) {
@@ -17,23 +17,27 @@ function App() {
     const { activityInput: name, checkbox } = newActivity;
     setActivities([{ id: uid(), name, checkbox }, ...activities]);
   }
+
   function handleDeleteActivity(id) {
     setActivities((prevActivities) => {
       return prevActivities.filter((activity) => activity.id !== id);
     });
   }
-  // Fetch API
-  const apiURL = "https://example-apis.vercel.app/api/weather/rainforest";
 
-  useEffect(() => {
-    async function getWeather() {
+  // Fetch API
+  async function getWeather() {
+    try {
       const response = await fetch(apiURL);
       const data = await response.json();
-
       setWeather(data);
+      throw new TypeError('Fetching Error');
+    } catch (e) {
+      console.log('Our Error', e);
     }
-    getWeather();
+  }
 
+  useEffect(() => {
+    getWeather();
     const timer = setInterval(getWeather, 5000);
     return () => clearInterval(timer);
   }, []);
@@ -43,26 +47,20 @@ function App() {
   }
 
   // Filter function:
-
   const isGoodWeather = weather.isGoodWeather;
-  // Filter with implicit return "()" istead of "{return}"
-  const filteredActivities = activities.filter(
-    (activity) => activity.checkbox === isGoodWeather
-  );
+  const filteredActivities = activities.filter((activity) => activity.checkbox === isGoodWeather);
+  console.log(isGoodWeather);
 
-  return (
-    <>
-      <h2>
-        Temperature: {weather.temperature}°C {weather.condition}
-      </h2>
-      <List
-        onDelete={handleDeleteActivity}
-        activities={filteredActivities}
-        isGoodWeather={isGoodWeather}
-      />
-      <Form onAddActivity={handleAddActivity} />
-    </>
-  );
+  if (isGoodWeather !== undefined) {
+    return (
+      <>
+        <h2>
+          Temperature: {weather.temperature}°C {weather.condition}
+        </h2>
+        <List onDelete={handleDeleteActivity} activities={filteredActivities} isGoodWeather={isGoodWeather} />
+        <Form onAddActivity={handleAddActivity} />
+      </>
+    );
+  }
+  return <ErrorComp />;
 }
-
-export default App;
