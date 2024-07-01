@@ -1,12 +1,12 @@
-import { uid } from 'uid';
-import './App.css';
-import Form from './components/Form';
-import List from './components/List';
-import useLocalStorageState from 'use-local-storage-state';
-import { useEffect, useState } from 'react';
+import { uid } from "uid";
+import "./App.css";
+import Form from "./components/Form";
+import List from "./components/List";
+import useLocalStorageState from "use-local-storage-state";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [activities, setActivities] = useLocalStorageState('activities', {
+  const [activities, setActivities] = useLocalStorageState("activities", {
     defaultValue: [],
   });
 
@@ -17,15 +17,19 @@ function App() {
     const { activityInput: name, checkbox } = newActivity;
     setActivities([{ id: uid(), name, checkbox }, ...activities]);
   }
-
+  function handleDeleteActivity(id) {
+    setActivities((prevActivities) => {
+      return prevActivities.filter((activity) => activity.id !== id);
+    });
+  }
   // Fetch API
-  const apiURL = 'https://example-apis.vercel.app/api/weather/rainforest';
+  const apiURL = "https://example-apis.vercel.app/api/weather/rainforest";
 
   useEffect(() => {
     async function getWeather() {
       const response = await fetch(apiURL);
       const data = await response.json();
-      console.log(data);
+
       setWeather(data);
     }
     getWeather();
@@ -42,16 +46,20 @@ function App() {
 
   const isGoodWeather = weather.isGoodWeather;
   // Filter with implicit return "()" istead of "{return}"
-  const filteredActivities = activities.filter((activity) => activity.checkbox === isGoodWeather);
-
-  console.log(weather.isGoodWeather);
+  const filteredActivities = activities.filter(
+    (activity) => activity.checkbox === isGoodWeather
+  );
 
   return (
     <>
       <h2>
         Temperature: {weather.temperature}°C {weather.condition}
       </h2>
-      <List activities={filteredActivities} isGoodWeather={isGoodWeather} />
+      <List
+        onDelete={handleDeleteActivity}
+        activities={filteredActivities}
+        isGoodWeather={isGoodWeather}
+      />
       <Form onAddActivity={handleAddActivity} />
     </>
   );
