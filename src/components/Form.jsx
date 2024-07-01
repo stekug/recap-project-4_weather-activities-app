@@ -1,6 +1,6 @@
-import "./Form.css";
+import './Form.css';
 
-function Form({ onAddActivity }) {
+export default function Form({ onAddActivity }) {
   function handleSubmit(event) {
     event.preventDefault();
     // Get the boolean from checkbox
@@ -9,7 +9,6 @@ function Form({ onAddActivity }) {
     const data = Object.fromEntries(formElements);
     // Save the boolean into the data object
     data.checkbox = checkbox;
-    // console.log(data);
     onAddActivity(data);
     event.target.reset();
     event.target.activityInput.focus();
@@ -20,7 +19,7 @@ function Form({ onAddActivity }) {
       <h2>Add new Activity:</h2>
       <div>
         <label htmlFor="activityInput">Name:</label>
-        <input type="text" name="activityInput" id="activityInput"></input>
+        <input type="text" name="activityInput" id="activityInput" required></input>
       </div>
       <div>
         <label htmlFor="checkbox">Good-weather Activity:</label>
@@ -30,5 +29,3 @@ function Form({ onAddActivity }) {
     </form>
   );
 }
-
-export default Form;
