@@ -1,4 +1,6 @@
 import "./List.css";
+import ListElement from "./ListElement";
+
 
 function List({ activities, isGoodWeather }) {
   const goodWeather = "The weather is awesome! Go outside and: ";
@@ -7,7 +9,8 @@ function List({ activities, isGoodWeather }) {
     <ul className="activityList">
       <h2>{isGoodWeather ? goodWeather : badWeather}</h2>
       {activities.map((activity) => (
-        <li key={activity.id}>{activity.name}</li>
+        <ListElement key={activity.id} activity={activity}/>
+        
       ))}
     </ul>
   );
