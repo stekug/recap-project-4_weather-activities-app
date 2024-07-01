@@ -1,0 +1,28 @@
+.ListElement{
+    display: flex;
+    background-color: darkslategray;
+    margin: 0.5rem;
+    justify-content: space-between;
+   align-items: center;
+    padding: 1rem 0.5rem;
+  }
+
+
+.ListElement__button{
+margin: 0;
+padding: 0;
+background-color: transparent;
+color:grey;
+transition: none;
+font-size: 1.5rem;
+}
+
+.ListElement__button:hover{
+    border: 1px solid transparent;
+    color: white;
+    
+}
+.ListElement__button:focus,
+.ListElement__button:focus-visible {
+  outline: none;
+}
