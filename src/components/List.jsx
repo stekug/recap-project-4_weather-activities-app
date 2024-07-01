@@ -31,9 +31,9 @@ export default function List() {
       const response = await fetch(apiURL);
       const data = await response.json();
       setWeather(data);
-    } catch (e) {
+    } catch (error) {
       setWeather('fetchError');
-      console.log('Our Error', e);
+      console.log('Our Error', error);
     }
   }
 
