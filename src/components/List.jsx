@@ -7,7 +7,7 @@ import { uid } from 'uid';
 import './List.css';
 import './ListElement.css';
 
-const apiURL = 'https://example-apis.vercel.app/api/weathertt';
+const apiURL = 'https://example-apis.vercel.app/api/weather';
 
 export default function List() {
   const [activities, setActivities] = useLocalStorageState('activities', { defaultValue: [] });
